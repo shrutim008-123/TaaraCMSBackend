@@ -1,0 +1,34 @@
+import express from "express";
+import dotenv from "dotenv";
+import connection from "./config/DB.js";
+import cors from "cors";
+import homepageRouter from "./routes/Homepage.routes.js";
+import awarenessRouter from "./routes/AwarenessPage.routes.js";
+import fileUploadRouter from "./routes/FileUploads.routes.js";
+import aboutUsRouter from "./routes/AboutUs.routes.js";
+import solutionRouter from "./routes/Solutions.routes.js";
+import getInvolvedRouter from "./routes/GetInvolved.routes.js";
+import authRouter from "./routes/Auth.routes.js";
+
+dotenv.config();
+const app = express();
+
+app.use(express.json());
+app.use(cors());
+
+app.use("/auth", authRouter);
+app.use("/homepage", homepageRouter);
+app.use("/awareness", awarenessRouter);
+app.use("/about_us", aboutUsRouter);
+app.use("/solutions", solutionRouter);
+app.use("/get_involved", getInvolvedRouter);
+app.use("/file_upload", fileUploadRouter);
+
+app.listen(process.env.PORT, async () => {
+  try {
+    await connection;
+    console.log("Server is running on port ", process.env.PORT);
+  } catch (error) {
+    console.log(error);
+  }
+});
