@@ -29,7 +29,8 @@ const OurWorkCardSchema = new mongoose.Schema({
   primaryText: { type: String, required: true },
   secondaryText: { type: String, required: true },
   backgroundImage: { type: ImageSchema, default: null },
-  siteUrl: { type: String, required: true },
+  description: { type: String, required: true },
+  // siteUrl: { type: String, required: true },
 });
 
 const QnaSchema = new mongoose.Schema({
@@ -67,11 +68,13 @@ const GetInvolvedSchema = new mongoose.Schema({
   impactSection: {
     quoteText: { type: String, required: true },
     primaryData: {
+      backgroundImage: { type: ImageSchema, default: null },
       value: { type: String, required: true },
       title: { type: String, required: true },
       description: { type: String, required: true },
     },
     secondaryData: {
+      backgroundImage: { type: ImageSchema, default: null },
       value: { type: String, required: true },
       title: { type: String, required: true },
       description: { type: String, required: true },

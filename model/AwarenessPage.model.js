@@ -19,6 +19,13 @@ const ContentCardSchema = new mongoose.Schema({
   image: { type: ImageSchema, default: null },
 });
 
+const exampleCardSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  description: { type: String, required: true },
+  backgroundImage: { type: ImageSchema, default: null },
+  thumbnailImage: { type: ImageSchema, default: null },
+});
+
 // External Site Schema
 const ExternalSiteSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -64,7 +71,7 @@ const AwarenessPageSchema = new mongoose.Schema({
     titlePrimary: { type: String, required: true },
     titleSecondary: { type: String, required: true },
     description: { type: String, required: true },
-    examples: { type: [ContentCardSchema], default: [] },
+    examples: { type: [exampleCardSchema], default: [] },
   },
   resourcesSection: {
     title: { type: String, required: true },

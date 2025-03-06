@@ -9,14 +9,17 @@ const ImageSchema = new mongoose.Schema({
 // Person Schema
 const PersonSchema = new mongoose.Schema({
   name: { type: String, required: true },
-  title: { type: String, required: true },
+  role: { type: String, required: true },
   profileImage: { type: ImageSchema, default: null },
 });
 
 // About Us Schema
 const AboutUsSchema = new mongoose.Schema({
   heroSection: {
-    images: { type: [ImageSchema], default: [] },
+    imagesData: {
+      images: { type: [ImageSchema], default: [] },
+      text: { type: String, required: true },
+    },
     description: { type: String, required: true },
   },
   ourStorySection: {
