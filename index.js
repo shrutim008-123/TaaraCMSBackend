@@ -9,6 +9,7 @@ import aboutUsRouter from "./routes/AboutUs.routes.js";
 import solutionRouter from "./routes/Solutions.routes.js";
 import getInvolvedRouter from "./routes/GetInvolved.routes.js";
 import authRouter from "./routes/Auth.routes.js";
+import newsletterRouter from "./routes/NewsLetter.routes.js";
 
 dotenv.config();
 const app = express();
@@ -23,6 +24,7 @@ app.use("/about_us", aboutUsRouter);
 app.use("/solutions", solutionRouter);
 app.use("/get_involved", getInvolvedRouter);
 app.use("/file_upload", fileUploadRouter);
+app.use("/newsletter", newsletterRouter);
 
 app.listen(process.env.PORT, async () => {
   try {

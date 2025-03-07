@@ -69,13 +69,13 @@ const GetInvolvedSchema = new mongoose.Schema({
     quoteText: { type: String, required: true },
     primaryData: {
       backgroundImage: { type: ImageSchema, default: null },
-      value: { type: String, required: true },
+      // value: { type: String, required: true },
       title: { type: String, required: true },
       description: { type: String, required: true },
     },
     secondaryData: {
       backgroundImage: { type: ImageSchema, default: null },
-      value: { type: String, required: true },
+      // value: { type: String, required: true },
       title: { type: String, required: true },
       description: { type: String, required: true },
     },

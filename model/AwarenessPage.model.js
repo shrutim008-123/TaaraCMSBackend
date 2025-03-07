@@ -57,11 +57,11 @@ const AwarenessPageSchema = new mongoose.Schema({
     titlePrimary: { type: String, required: true },
     titleSecondary: { type: String, required: true },
     description: { type: String, required: true },
-    mapEmbedCode: { type: String, required: true },
+    // mapEmbedCode: { type: String, required: true },
     quoteText: { type: String, required: true },
   },
   statisticsSection: {
-    number: { type: String, required: true },
+    image: { type: ImageSchema, default: null },
     title: { type: String, required: true },
     description: { type: String, required: true },
     cards: { type: [ContentCardSchema], default: [] },
