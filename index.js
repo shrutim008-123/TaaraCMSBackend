@@ -10,6 +10,7 @@ import solutionRouter from "./routes/Solutions.routes.js";
 import getInvolvedRouter from "./routes/GetInvolved.routes.js";
 import authRouter from "./routes/Auth.routes.js";
 import newsletterRouter from "./routes/NewsLetter.routes.js";
+import healProjectRouter from "./routes/HealProject.routes.js";
 
 dotenv.config();
 const app = express();
@@ -23,6 +24,7 @@ app.use("/awareness", awarenessRouter);
 app.use("/about_us", aboutUsRouter);
 app.use("/solutions", solutionRouter);
 app.use("/get_involved", getInvolvedRouter);
+app.use("/heal_project", healProjectRouter);
 app.use("/file_upload", fileUploadRouter);
 app.use("/newsletter", newsletterRouter);
 

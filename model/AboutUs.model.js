@@ -23,7 +23,8 @@ const AboutUsSchema = new mongoose.Schema({
     description: { type: String, required: true },
   },
   ourStorySection: {
-    storyImage: { type: ImageSchema, default: null },
+    desktopImage: { type: ImageSchema, default: null },
+    mobileImage: { type: ImageSchema, default: null },
     titlePrimary: { type: String, required: true },
     titleSecondary: { type: String, required: true },
     description: { type: String, required: true },
