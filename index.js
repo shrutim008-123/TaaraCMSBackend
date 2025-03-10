@@ -16,8 +16,23 @@ dotenv.config();
 const app = express();
 
 app.use(express.json());
+
+const allowedOrigins = [
+  process.env.CMS_FRONTEND_URL, // First frontend URL
+  process.env.FRONTEND_URL, // Second frontend URL (Add this in your .env file)
+];
+
 app.use(
-  cors({ origin: process.env.FRONTEND_URL, methods: ["GET", "POST", "PUT"] })
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT"],
+  })
 );
 
 app.use("/auth", authRouter);
