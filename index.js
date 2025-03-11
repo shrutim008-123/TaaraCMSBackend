@@ -45,7 +45,7 @@ app.use("/heal_project", healProjectRouter);
 app.use("/file_upload", fileUploadRouter);
 app.use("/newsletter", newsletterRouter);
 
-app.listen(process.env.PORT, async () => {
+app.listen(process.env.PORT || 4000, async () => {
   try {
     await connection;
     console.log("Server is running on port ", process.env.PORT);
