@@ -20,6 +20,7 @@ app.use(express.json());
 const allowedOrigins = [
   process.env.CMS_FRONTEND_URL, // First frontend URL
   process.env.FRONTEND_URL, // Second frontend URL (Add this in your .env file)
+  process.env.LOCALHOST_URL,
 ];
 
 app.use(
