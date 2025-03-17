@@ -14,7 +14,7 @@ const ContentCardSchema = new mongoose.Schema({
 });
 
 // About Us Schema
-const SolutionPageSchema = new mongoose.Schema({
+const Solution1PageSchema = new mongoose.Schema({
   heroSection: {
     titlePrimary: {
       primaryWord: { type: String, required: true },
@@ -71,6 +71,6 @@ const SolutionPageSchema = new mongoose.Schema({
 });
 
 // Creating the Model
-const SolutionPageModel = mongoose.model("solution", SolutionPageSchema);
+const Solution1PageModel = mongoose.model("solution1", Solution1PageSchema);
 
-export default SolutionPageModel;
+export default Solution1PageModel;
