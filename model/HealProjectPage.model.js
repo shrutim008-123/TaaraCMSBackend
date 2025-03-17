@@ -30,11 +30,6 @@ const HealProjectPageSchema = new mongoose.Schema(
       secondaryTitle: { type: String, required: true },
       description: { type: String, required: true },
     },
-    secondaryContent: {
-      primaryTitle: { type: String, required: true },
-      secondaryTitle: { type: String, required: true },
-      description: { type: String, required: true },
-    },
     hopeSection: {
       primaryTitle: { type: String, required: true },
       secondaryTitle: { type: String, required: true },
@@ -45,6 +40,7 @@ const HealProjectPageSchema = new mongoose.Schema(
       quoteText: { type: String, required: true },
       primaryTitle: { type: String, required: true },
       secondaryTitle: { type: String, required: true },
+      description: { type: String, required: true },
       cards: { type: [cardsSchema], default: [] },
     },
     healSection: {
