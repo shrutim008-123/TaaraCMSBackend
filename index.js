@@ -14,6 +14,7 @@ import paymentRouter from "./routes/Pyment.Routes.js";
 import newMemberRouter from "./routes/NewMember.routes.js";
 import solution1Router from "./routes/SolutionsOne.routes.js";
 import solution2Router from "./routes/SolutionsTwo.routes.js";
+import axios from "axios";
 
 dotenv.config();
 const app = express();
@@ -39,6 +40,25 @@ app.use("/file_upload", fileUploadRouter);
 app.use("/newsletter", newsletterRouter);
 app.use("/new_members", newMemberRouter);
 app.use("/payment", paymentRouter);
+
+const keepAlive = () => {
+  setInterval(async () => {
+    try {
+      const url = `${process.env.BASE_URL || "http://localhost:4000"}/health`;
+      const response = await axios.get(url);
+      console.log("Keep-alive ping successful:", response.status);
+    } catch (error) {
+      console.error("Keep-alive ping failed:", error.message);
+    }
+  }, 5 * 60 * 1000); // Ping every 5 minutes
+};
+
+// Create a health check route
+app.get("/health", (req, res) => {
+  res.status(200).send("OK");
+});
+
+keepAlive(); // Start the keep-alive function
 
 app.listen(process.env.PORT || 4000, async () => {
   try {
