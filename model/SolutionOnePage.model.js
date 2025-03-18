@@ -10,6 +10,7 @@ const ImageSchema = new mongoose.Schema({
 const ContentCardSchema = new mongoose.Schema({
   primaryText: { type: String, required: true },
   secondaryText: { type: String, required: true },
+  description: { type: String, default: "" },
   backgroundImages: { type: ImageSchema, default: null },
 });
 
