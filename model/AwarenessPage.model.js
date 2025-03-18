@@ -9,6 +9,7 @@ const ImageSchema = new mongoose.Schema({
 // Tip Card Schema
 const TipCardSchema = new mongoose.Schema({
   title: { type: String, required: true },
+  description: { type: String, required: true },
   image: { type: ImageSchema, default: null },
 });
 
