@@ -68,8 +68,12 @@ const createPayment = async (req, res) => {
       ],
       application_context: {
         // ✅ Pass request_id to return_url and cancel_url
-        return_url: `http://localhost:3000/payment/success?request_id=${generatedUid}`, // ✅ Pass request_id to success URL
-        cancel_url: "http://localhost:3000/payment/failure",
+        return_url: `${
+          process.env.BASE_URL || "http://localhost:4000"
+        }/payment/success?request_id=${generatedUid}`, // ✅ Pass request_id to success URL
+        cancel_url: `${
+          process.env.BASE_URL || "http://localhost:4000"
+        }/payment/failure`,
         shipping_preference: "NO_SHIPPING",
         user_action: "PAY_NOW",
         landing_page: "LOGIN",
@@ -91,7 +95,7 @@ const createPayment = async (req, res) => {
       }
     );
 
-    console.log("Order Created:", response.data);
+    // console.log("Order Created:", response.data);
 
     res.status(201).json({
       id: response.data.id,
@@ -131,9 +135,10 @@ const paymentSuccess = async (req, res) => {
     // ✅ Clean up request ID from map after successful payment
     requestMap.delete(request_id);
 
-    res.redirect("http://localhost:5173/payment");
+    res.redirect(`${process.env.FRONTEND_URL}/get-involved?success=true`);
   } catch (error) {
-    console.log(error?.response?.data);
+    console.log(error);
+    // console.log(error?.response?.data);
     res.status(500).json({ error: "Failed to capture payment" });
   }
 };
@@ -147,7 +152,7 @@ const paymentFailure = async (req, res) => {
     if (request_id) {
       requestMap.delete(request_id);
     }
-    
+
     res.send("Payment failed!");
   } catch (error) {
     console.log(error);

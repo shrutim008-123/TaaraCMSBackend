@@ -12,7 +12,6 @@ const videosSchema = new mongoose.Schema({
 
 const cardsSchema = new mongoose.Schema({
   primaryTitle: { type: String, required: true },
-  secondaryTitle: { type: String, required: true },
   backgroundImage: { type: ImageSchema, required: true },
 });
 
@@ -28,7 +27,8 @@ const HealProjectPageSchema = new mongoose.Schema(
     primaryContent: {
       primaryTitle: { type: String, required: true },
       secondaryTitle: { type: String, required: true },
-      description: { type: String, required: true },
+      description1: { type: String, required: true },
+      description2: { type: String, required: true },
     },
     hopeSection: {
       primaryTitle: { type: String, required: true },

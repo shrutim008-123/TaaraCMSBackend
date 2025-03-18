@@ -13,7 +13,6 @@ const DonationSchema = new mongoose.Schema({
 
 const ContentCardSchema = new mongoose.Schema({
   primaryText: { type: String, required: true },
-  secondaryText: { type: String, required: true },
   backgroundImage: { type: ImageSchema, default: null },
 });
 
@@ -41,10 +40,6 @@ const QnaSchema = new mongoose.Schema({
 const GetInvolvedSchema = new mongoose.Schema({
   heroSection: {
     titlePrimary: {
-      primaryWord: { type: String, required: true },
-      secondaryWord: { type: String, required: true },
-    },
-    titleSecondary: {
       primaryWord: { type: String, required: true },
       secondaryWord: { type: String, required: true },
     },

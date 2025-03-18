@@ -36,19 +36,13 @@ const AboutUsSchema = new mongoose.Schema({
     description: { type: String, required: true },
   },
   advisoryBoardSection: {
-    titlePrimary: { type: String, required: true },
-    titleSecondary: { type: String, required: true },
     members: { type: [PersonSchema], default: [] },
   },
   teamSection1: {
     quoteText: { type: String, required: true },
-    titlePrimary: { type: String, required: true },
-    titleSecondary: { type: String, required: true },
     teamMembers: { type: [PersonSchema], default: [] },
   },
   teamSection2: {
-    titlePrimary: { type: String, required: true },
-    titleSecondary: { type: String, required: true },
     teamMembers: { type: [PersonSchema], default: [] },
   },
 });
