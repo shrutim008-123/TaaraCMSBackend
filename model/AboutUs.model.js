@@ -17,10 +17,16 @@ const PersonSchema = new mongoose.Schema({
 const AboutUsSchema = new mongoose.Schema({
   heroSection: {
     imagesData: {
-      images: { type: [ImageSchema], default: [] },
-      text: { type: String, required: true },
+      type: [
+        {
+          images: { type: ImageSchema, default: null },
+          text: { type: String, default: "" },
+        },
+      ],
+      default: [],
     },
     description: { type: String, required: true },
+    missionTitle: { type: String, default: "Our Mission" }, // Added new field
   },
   ourStorySection: {
     desktopImage: { type: ImageSchema, default: null },
