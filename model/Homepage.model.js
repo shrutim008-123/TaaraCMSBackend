@@ -77,6 +77,10 @@ const impactCardSchema = new mongoose.Schema({
     type: imageSchema,
     default: null,
   },
+  expandedDescription: {
+    type: String,
+    required: true,
+  },
 });
 
 const quotes = new mongoose.Schema({
