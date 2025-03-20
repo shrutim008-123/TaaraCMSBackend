@@ -28,7 +28,7 @@ const OurWorkCardSchema = new mongoose.Schema({
   primaryText: { type: String, required: true },
   secondaryText: { type: String, required: true },
   backgroundImage: { type: ImageSchema, default: null },
-  description: { type: String, required: true },
+  // description: { type: String, required: true },
   // siteUrl: { type: String, required: true },
 });
 
