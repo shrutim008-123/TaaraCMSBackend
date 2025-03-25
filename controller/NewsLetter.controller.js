@@ -19,8 +19,8 @@ const createNewsLetterContent = async (req, res) => {
 
     // Email options
     const mailOptions = {
-      from: `TAARA Team ${process.env.EMAIL_USER}`,
-      to: req.body.email, // Ensure the request contains the user's email
+      from: `"TAARA Team" <${process.env.EMAIL_USER}>`, // Proper sender format
+      to: req.body.email, // Ensure request contains the user's email
       subject: "Welcome to TAARA — You’re Now Part of the Solution",
       text: `Thank you for signing up.
 
@@ -29,6 +29,11 @@ You’ll receive updates on the work we’re doing, stories from the front lines
 We’re glad you’re here.
 
 -The TAARA Team`,
+      html: `<p>Thank you for signing up.</p>
+             <p>You’ll receive updates on the work we’re doing, stories from the front lines, and ways you can take action.</p>
+             <p><strong>Together, we’ve already invested over 43,800 hours</strong> to empower survivors and prevent future victimization. With your support, we can do more.</p>
+             <p>We’re glad you’re here.</p>
+             <p><strong>- The TAARA Team</strong></p>`,
     };
 
     // Send email
