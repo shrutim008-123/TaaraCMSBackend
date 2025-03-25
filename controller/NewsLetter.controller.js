@@ -19,7 +19,7 @@ const createNewsLetterContent = async (req, res) => {
 
     // Email options
     const mailOptions = {
-      from: `"TAARA Team" <${process.env.EMAIL_USER}>`, // Proper sender format
+      from: `"TAARA Team" ${process.env.EMAIL_USER}`, // Proper sender format
       to: req.body.email, // Ensure request contains the user's email
       subject: "Welcome to TAARA — You’re Now Part of the Solution",
       text: `Thank you for signing up.
