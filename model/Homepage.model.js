@@ -12,10 +12,6 @@ const imageSchema = new mongoose.Schema({
 });
 
 const CardSchema = new mongoose.Schema({
-  redirectUrl: {
-    type: String,
-    required: true,
-  },
   title: {
     type: String,
     required: true,
