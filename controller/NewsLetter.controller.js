@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-
 const createNewsLetterContent = async (req, res) => {
   try {
     const newsLetter = await newsLetterModel.create(req.body);
@@ -20,7 +19,7 @@ const createNewsLetterContent = async (req, res) => {
 
     // Email options
     const mailOptions = {
-      from: process.env.EMAIL_USER,
+      from: `TAARA Team ${process.env.EMAIL_USER}`,
       to: req.body.email, // Ensure the request contains the user's email
       subject: "Welcome to TAARA — You’re Now Part of the Solution",
       text: `Thank you for signing up.
