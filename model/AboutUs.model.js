@@ -10,6 +10,8 @@ const ImageSchema = new mongoose.Schema({
 const PersonSchema = new mongoose.Schema({
   name: { type: String, required: true },
   role: { type: String, required: true },
+  bio: { type: String, default: "" },
+  email: { type: String, default: "" },
   profileImage: { type: ImageSchema, default: null },
 });
 
