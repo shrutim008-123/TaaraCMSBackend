@@ -15,6 +15,8 @@ import newMemberRouter from "./routes/NewMember.routes.js";
 import solution1Router from "./routes/SolutionsOne.routes.js";
 import solution2Router from "./routes/SolutionsTwo.routes.js";
 import axios from "axios";
+import financialPageRouter from "./routes/Financial.route.js";
+import eventPageRouter from "./routes/EventPage.routes.js";
 
 dotenv.config();
 const app = express();
@@ -24,7 +26,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE"]
   })
 );
 
@@ -36,6 +38,8 @@ app.use("/solutions_one", solution1Router);
 app.use("/solutions_two", solution2Router);
 app.use("/get_involved", getInvolvedRouter);
 app.use("/heal_project", healProjectRouter);
+app.use("/financial", financialPageRouter);
+app.use("/events-page", eventPageRouter);
 app.use("/file_upload", fileUploadRouter);
 app.use("/newsletter", newsletterRouter);
 app.use("/new_members", newMemberRouter);
