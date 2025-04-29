@@ -1,6 +1,10 @@
 import express from "express";
 import multer from "multer";
-import { deleteFile, uploadFile } from "../controller/FileUpload.controller.js";
+import {
+  deleteFile,
+  deleteMultipleFiles,
+  uploadFile,
+} from "../controller/FileUpload.controller.js";
 
 const fileUploadRouter = express.Router();
 
@@ -9,5 +13,6 @@ const upload = multer({ storage: storage });
 
 fileUploadRouter.post("/", upload.single("image"), uploadFile);
 fileUploadRouter.delete("/:publicId", deleteFile);
+fileUploadRouter.post("/cleanup-temp-media", deleteMultipleFiles);
 
 export default fileUploadRouter;

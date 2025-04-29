@@ -40,4 +40,16 @@ const deleteFile = async (req, res) => {
   }
 };
 
-export { uploadFile, deleteFile };
+const deleteMultipleFiles = async (req, res) => {
+  const { publicIds } = req.body;
+  try {
+    const deleted = await Promise.all(
+      publicIds.map((id) => cloudinary.uploader.destroy(id))
+    );
+    res.json({ success: true, deleted });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+};
+
+export { uploadFile, deleteFile, deleteMultipleFiles };
