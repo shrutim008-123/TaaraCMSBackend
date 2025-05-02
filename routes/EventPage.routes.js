@@ -2,6 +2,7 @@ import express from "express";
 import {
   createEventContent,
   createEventsPageContent,
+  deleteEvent,
   getAllEvents,
   getEventById,
   getEventsPageContent,
@@ -19,5 +20,6 @@ eventPageRouter.get("/events", getAllEvents);
 eventPageRouter.get("/events/:id", getEventById);
 eventPageRouter.post("/events", createEventContent);
 eventPageRouter.put("/events/:id", updateEventContent);
+eventPageRouter.delete("/events/:id", deleteEvent);
 
 export default eventPageRouter;
