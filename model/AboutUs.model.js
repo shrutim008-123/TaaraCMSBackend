@@ -15,6 +15,21 @@ const PersonSchema = new mongoose.Schema({
   profileImage: { type: ImageSchema, default: null },
 });
 
+const quotes = new mongoose.Schema({
+  start: {
+    type: String,
+    required: true,
+  },
+  italic: {
+    type: String,
+    required: true,
+  },
+  end: {
+    type: String,
+    required: true,
+  },
+});
+
 // About Us Schema
 const AboutUsSchema = new mongoose.Schema({
   heroSection: {
@@ -41,7 +56,7 @@ const AboutUsSchema = new mongoose.Schema({
     members: { type: [PersonSchema], default: [] },
   },
   teamSection1: {
-    quoteText: { type: String, required: true },
+    quoteText: { type: quotes, required: true },
     teamMembers: { type: [PersonSchema], default: [] },
   },
   teamSection2: {

@@ -14,6 +14,21 @@ const ContentCardSchema = new mongoose.Schema({
   backgroundImages: { type: ImageSchema, default: null },
 });
 
+const quotes = new mongoose.Schema({
+  start: {
+    type: String,
+    required: true,
+  },
+  italic: {
+    type: String,
+    required: true,
+  },
+  end: {
+    type: String,
+    required: true,
+  },
+});
+
 // About Us Schema
 const Solution1PageSchema = new mongoose.Schema({
   heroSection: {
@@ -65,7 +80,7 @@ const Solution1PageSchema = new mongoose.Schema({
     cta: {
       image1: { type: ImageSchema, default: null },
       image2: { type: ImageSchema, default: null },
-      title: { type: String, required: true },
+      title: { type: quotes, required: true },
       link: { type: String, required: true },
     },
   },

@@ -39,6 +39,21 @@ const AuthorSchema = new mongoose.Schema({
   externalLinks: { type: [ExternalSiteSchema], default: [] },
 });
 
+const quotes = new mongoose.Schema({
+  start: {
+    type: String,
+    required: true,
+  },
+  italic: {
+    type: String,
+    required: true,
+  },
+  end: {
+    type: String,
+    required: true,
+  },
+});
+
 // Awareness Page Schema
 const AwarenessPageSchema = new mongoose.Schema({
   heroSection: {
@@ -59,14 +74,14 @@ const AwarenessPageSchema = new mongoose.Schema({
     titleSecondary: { type: String, required: true },
     description: { type: String, required: true },
     // mapEmbedCode: { type: String, required: true },
-    quoteText: { type: String, required: true },
+    quoteText: { type: quotes, required: true },
   },
   statisticsSection: {
     image: { type: ImageSchema, default: null },
     title: { type: String, required: true },
     description: { type: String, required: true },
     cards: { type: [ContentCardSchema], default: [] },
-    quoteText: { type: String, required: true },
+    quoteText: { type: quotes, required: true },
   },
   exampleSection: {
     titlePrimary: { type: String, required: true },
