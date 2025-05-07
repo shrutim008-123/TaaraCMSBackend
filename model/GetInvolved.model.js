@@ -37,6 +37,21 @@ const QnaSchema = new mongoose.Schema({
   answer: { type: String, required: true },
 });
 
+const quotes = new mongoose.Schema({
+  start: {
+    type: String,
+    required: true,
+  },
+  italic: {
+    type: String,
+    required: true,
+  },
+  end: {
+    type: String,
+    required: true,
+  },
+});
+
 const GetInvolvedSchema = new mongoose.Schema({
   heroSection: {
     titlePrimary: {
@@ -61,7 +76,7 @@ const GetInvolvedSchema = new mongoose.Schema({
     },
   },
   impactSection: {
-    quoteText: { type: String, required: true },
+    quoteText: { type: quotes, required: true },
     primaryData: {
       backgroundImage: { type: ImageSchema, default: null },
       // value: { type: String, required: true },

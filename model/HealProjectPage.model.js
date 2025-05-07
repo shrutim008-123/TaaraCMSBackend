@@ -15,6 +15,21 @@ const cardsSchema = new mongoose.Schema({
   backgroundImage: { type: ImageSchema, required: true },
 });
 
+const quotes = new mongoose.Schema({
+  start: {
+    type: String,
+    required: true,
+  },
+  italic: {
+    type: String,
+    required: true,
+  },
+  end: {
+    type: String,
+    required: true,
+  },
+});
+
 const HealProjectPageSchema = new mongoose.Schema(
   {
     heroSection: {
@@ -37,7 +52,7 @@ const HealProjectPageSchema = new mongoose.Schema(
       videosData: { type: [videosSchema], default: [] },
     },
     fourPillarsSection: {
-      quoteText: { type: String, required: true },
+      quoteText: { type: quotes, required: true },
       primaryTitle: { type: String, required: true },
       secondaryTitle: { type: String, required: true },
       description: { type: String, required: true },

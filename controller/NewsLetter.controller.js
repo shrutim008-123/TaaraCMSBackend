@@ -26,14 +26,26 @@ const createNewsLetterContent = async (req, res) => {
 
 You’ll receive updates on the work we’re doing, stories from the front lines, and ways you can take action. Together, we’ve already invested over 43,800 hours to empower survivors and prevent future victimization. With your support, we can do more.
 
-We’re glad you’re here.
+We’re glad you’re here. 
 
--The TAARA Team`,
+-The TAARA Team
+`,
       html: `<p>Thank you for signing up.</p>
-             <p>You’ll receive updates on the work we’re doing, stories from the front lines, and ways you can take action.</p>
-             <p><strong>Together, we’ve already invested over 43,800 hours</strong> to empower survivors and prevent future victimization. With your support, we can do more.</p>
-             <p>We’re glad you’re here.</p>
-             <p><strong>- The TAARA Team</strong></p>`,
+
+<p>
+  You’ll receive updates on the work we’re doing, stories from the front lines,
+  and ways you can take action.
+</p>
+
+<p>
+  <strong>Together, we’ve already invested over 43,800 hours</strong> to empower survivors
+  and prevent future victimization. With your support, we can do more.
+</p>
+
+<p>We’re glad you’re here.</p>
+
+<p><strong>- The TAARA Team</strong></p>
+`,
     };
 
     // Send email
