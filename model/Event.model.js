@@ -51,11 +51,10 @@ const eventSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },
     description: { type: String, required: true },
-    date: { type: String, required: true },
+    date: { type: Date, required: true },
     location: { type: String, required: true },
     heroImage: { type: ImageSchema, default: null },
     showcaseImage: { type: ImageSchema, default: null },
-    eventType: { type: String, required: true, enum: ["past", "upcoming"] },
     extraInfo: {
       type: [ExtraInfoSchema],
       default: [],
