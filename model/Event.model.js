@@ -54,6 +54,7 @@ const eventSchema = new mongoose.Schema(
     date: { type: Date, required: true },
     location: { type: String, required: true },
     heroImage: { type: ImageSchema, default: null },
+    heroMobileImage: { type: ImageSchema, default: null },
     showcaseImage: { type: ImageSchema, default: null },
     extraInfo: {
       type: [ExtraInfoSchema],
