@@ -15,7 +15,7 @@ const ExtraInfoSchema = new mongoose.Schema(
     informationType: {
       type: String,
       required: true,
-      enum: ["description", "crousel", "video", "gridImages"],
+      enum: ["description", "crousel", "video", "gridImages", "cta"],
     },
     description: {
       type: String, // Only for "description"
@@ -34,6 +34,10 @@ const ExtraInfoSchema = new mongoose.Schema(
       type: [ImageSchema], // Array of image URLs
       validate: [arrayLimitThree, "{PATH} exceeds the limit of 3"],
       default: undefined,
+    },
+    cta: {
+      buttonText: { type: String, required: true },
+      url: { type: String, required: true },
     },
   },
   { _id: false } // No separate _id for each extraInfo item
