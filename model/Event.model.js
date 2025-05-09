@@ -31,8 +31,8 @@ const ExtraInfoSchema = new mongoose.Schema(
       default: undefined,
     },
     gridImages: {
-      type: [ImageSchema], // Array of image URLs
-      validate: [arrayLimitThree, "{PATH} exceeds the limit of 3"],
+      type: [crouselSchema], // Array of image URLs
+      validate: [arrayLimitFive, "{PATH} exceeds the limit of 5"],
       default: undefined,
     },
     cta: {
@@ -45,10 +45,6 @@ const ExtraInfoSchema = new mongoose.Schema(
 
 function arrayLimitFive(val) {
   return val.length <= 5;
-}
-
-function arrayLimitThree(val) {
-  return val.length <= 3;
 }
 
 const eventSchema = new mongoose.Schema(
