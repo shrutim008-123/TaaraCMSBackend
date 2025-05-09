@@ -36,8 +36,8 @@ const ExtraInfoSchema = new mongoose.Schema(
       default: undefined,
     },
     cta: {
-      buttonText: { type: String, required: true },
-      url: { type: String, required: true },
+      buttonText: { type: String, default: undefined },
+      url: { type: String, default: undefined },
     },
   },
   { _id: false } // No separate _id for each extraInfo item
