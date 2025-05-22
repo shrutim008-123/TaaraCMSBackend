@@ -99,11 +99,11 @@ const HomepageSchema = new mongoose.Schema({
   hero: {
     images: {
       type: [imageSchema],
-      default: [null, null, null], // Default to 7 null images
+      default: [], // Default to 7 null images
     },
     mobileImages: {
       type: [imageSchema],
-      default: [null, null, null], // Default to 7 null images
+      default: [], // Default to 7 null images
     },
     title1: {
       word1: {
