@@ -62,6 +62,9 @@ const AboutUsSchema = new mongoose.Schema({
   teamSection2: {
     teamMembers: { type: [PersonSchema], default: [] },
   },
+  volunteersSection: {
+    teamMembers: { type: [PersonSchema], default: [] },
+  },
 });
 
 // Creating the Model
