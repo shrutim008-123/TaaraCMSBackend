@@ -10,7 +10,6 @@ const createHomepageContent = async (req, res) => {
 };
 
 const updateHomepageContent = async (req, res) => {
-  console.log(req.body);
   try {
     const homepage = await homepageModel.findByIdAndUpdate(
       req.params.id,
