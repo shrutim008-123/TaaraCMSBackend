@@ -12,7 +12,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 fileUploadRouter.post("/", upload.single("image"), uploadFile);
-fileUploadRouter.delete("/:publicId", deleteFile);
+fileUploadRouter.delete("/delete", deleteFile);
 fileUploadRouter.post("/cleanup-temp-media", deleteMultipleFiles);
 
 export default fileUploadRouter;
