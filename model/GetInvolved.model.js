@@ -83,12 +83,12 @@ const GetInvolvedSchema = new mongoose.Schema({
       title: { type: String, required: true },
       description: { type: String, required: true },
     },
-    secondaryData: {
-      backgroundImage: { type: ImageSchema, default: null },
-      // value: { type: String, required: true },
-      title: { type: String, required: true },
-      description: { type: String, required: true },
-    },
+    // secondaryData: {
+    //   backgroundImage: { type: ImageSchema, default: null },
+    //   // value: { type: String, required: true },
+    //   title: { type: String, required: true },
+    //   description: { type: String, required: true },
+    // },
     cards: { type: [ContentCardSchema], default: [] },
   },
   joinUsSection: {
