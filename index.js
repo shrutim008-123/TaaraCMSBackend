@@ -26,7 +26,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"]
+    methods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 
@@ -45,24 +45,24 @@ app.use("/newsletter", newsletterRouter);
 app.use("/new_members", newMemberRouter);
 app.use("/payment", paymentRouter);
 
-// const keepAlive = () => {
-//   setInterval(async () => {
-//     try {
-//       const url = `${process.env.BASE_URL || "http://localhost:4000"}/health`;
-//       const response = await axios.get(url);
-//       console.log("Keep-alive ping successful:", response.status);
-//     } catch (error) {
-//       console.error("Keep-alive ping failed:", error.message);
-//     }
-//   }, 5 * 60 * 1000); // Ping every 5 minutes
-// };
+const keepAlive = () => {
+  setInterval(async () => {
+    try {
+      const url = `${process.env.BASE_URL || "http://localhost:4000"}/health`;
+      const response = await axios.get(url);
+      console.log("Keep-alive ping successful:", response.status);
+    } catch (error) {
+      console.error("Keep-alive ping failed:", error.message);
+    }
+  }, 5 * 60 * 1000); // Ping every 5 minutes
+};
 
 // Create a health check route
 app.get("/health", (req, res) => {
   res.status(200).send("OK");
 });
 
-// keepAlive(); // Start the keep-alive function
+keepAlive(); // Start the keep-alive function
 
 app.listen(process.env.PORT || 4000, async () => {
   try {
