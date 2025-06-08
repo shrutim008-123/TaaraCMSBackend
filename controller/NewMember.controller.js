@@ -6,6 +6,14 @@ dotenv.config();
 
 const createNewMemberContent = async (req, res) => {
   try {
+    const existingMail = await newMembersModel.findOne({
+      email: req.body.email,
+    });
+
+    if (existingMail) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
     const newsLetter = await newMembersModel.create(req.body);
     newsLetter.save();
 
@@ -30,16 +38,24 @@ We’ve received your message and appreciate your interest in getting involved w
 If this was a mistake or you have more to share, feel free to reply to this email.
 
 - The TAARA Team`,
-      html: `<p>Thank you for reaching out to us, <strong>${req.body.firstName}</strong>.</p>
-<p>We’ve received your message and appreciate your interest in getting involved with TAARA. Our team will review your details and get back to you shortly.</p>
-<p>If this was a mistake or you have more to share, feel free to reply to this email.</p>
-<p><strong>- The TAARA Team</strong></p>`,
+      html: `<div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f7f7f7; color: #333;">
+  <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden;">
+    <div style="padding: 30px;">
+      <h2 style="color: #004085;">Thank You for Reaching Out</h2>
+      <p style="font-size: 16px; line-height: 1.6;">Thank you for reaching out to us, <strong>${req.body.firstName}</strong>.</p>
+      <p style="font-size: 16px; line-height: 1.6;">We’ve received your message and appreciate your interest in getting involved with TAARA. Our team will review your details and get back to you shortly.</p>
+      <p style="font-size: 16px; line-height: 1.6;">If this was a mistake or you have more to share, feel free to reply to this email.</p>
+      <p style="font-size: 16px; line-height: 1.6;"><strong>- The TAARA Team</strong></p>
+    </div>
+  </div>
+</div>
+`,
     };
 
     // Notification to the TAARA team about the new Get Involved submission
     const getInvolvedTeamMail = {
       from: `"TAARA Notifications" <${process.env.EMAIL_USER}>`,
-      to: "developer@taara.org",
+      to: "info@taara.org",
       subject: "New Get Involved Submission",
       text: `Someone just filled the Get Involved form.
 

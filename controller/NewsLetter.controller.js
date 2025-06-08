@@ -14,6 +14,13 @@ const transporter = nodemailer.createTransport({
 
 const createNewsLetterContent = async (req, res) => {
   try {
+    const existingMail = await newsLetterModel.findOne({
+      email: req.body.email,
+    });
+    if (existingMail) {
+      return res.status(400).json({ message: "Email already exists" });
+    }
+
     const newsLetter = await newsLetterModel.create(req.body);
     newsLetter.save();
 
@@ -58,7 +65,7 @@ We’re glad you’re here.
 
     const mailOptions2 = {
       from: `"TAARA Team" ${process.env.EMAIL_USER}`, // Proper sender format
-      to: "developer@taara.org", // Ensure request contains the user's email
+      to: "info@taara.org", // Ensure request contains the user's email
       subject: "New Newsletter Signup",
       text: `
 A new user has signed up for the newsletter:
@@ -95,7 +102,7 @@ Email: ${req.body.email || "N/A"}
       .status(201)
       .json({ message: "Newsletter created and email sent!", newsLetter });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -104,7 +111,7 @@ const getNewsLetterData = async (req, res) => {
     const data = await newsLetterModel.find();
     res.status(200).json(data);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -115,7 +122,7 @@ const deleteNewsLetterContent = async (req, res) => {
     );
     res.status(200).json(deletedNewsLetter);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -153,7 +160,7 @@ We’ve received your message and our team will be in touch if needed. Until the
     // Notification to the TAARA team about the new Footer Email submission
     const teamMail = {
       from: `"TAARA Team" <${process.env.EMAIL_USER}>`,
-      to: "developer@taara.org",
+      to: " info@taara.org",
       subject: "Email Submission Received",
       text: `
         A new email has been submitted by (${req.body.email}).
@@ -177,7 +184,7 @@ We’ve received your message and our team will be in touch if needed. Until the
     await transporter.sendMail(teamMail);
     res.status(200).json({ message: "Emails sent successfully" });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
   }
 };
 
