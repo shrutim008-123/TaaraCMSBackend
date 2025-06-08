@@ -7,6 +7,7 @@ dotenv.config();
 const createNewsLetterContent = async (req, res) => {
   try {
     const newsLetter = await newsLetterModel.create(req.body);
+    newsLetter.save();
 
     // Create a transporter
     const transporter = nodemailer.createTransport({
@@ -68,4 +69,60 @@ const getNewsLetterData = async (req, res) => {
   }
 };
 
-export { createNewsLetterContent, getNewsLetterData };
+const deleteNewsLetterContent = async (req, res) => {
+  try {
+    const deletedNewsLetter = await newsLetterModel.findByIdAndDelete(
+      req.params.id
+    );
+    res.status(200).json(deletedNewsLetter);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+const subscribeByEmail = async (req, res) => {
+  try {
+    const getInvolvedUserMail = {
+      from: `"TAARA Team" <${process.env.EMAIL_USER}>`,
+      to: req.body.email,
+      subject: "You’re In — Welcome to TAARA",
+      text: `You’re in! Thanks for joining TAARA’s fight to protect kids, empower survivors, and flip the script on trafficking.
+
+We’ve received your message and our team will be in touch if needed. Until then, stay tuned and stay involved!
+
+- The TAARA Team`,
+      html: `<p><strong>You’re in!</strong> Thanks for joining TAARA’s fight to protect kids, empower survivors, and flip the script on trafficking.</p>
+
+<p><strong>- The TAARA Team</strong></p>`,
+    };
+
+    // Notification to the TAARA team about the new Get Involved submission
+    const getInvolvedTeamMail = {
+      from: `"TAARA Notifications" <${process.env.EMAIL_USER}>`,
+      to: "developer@taara.org",
+      subject: "New Get Involved Submission",
+      text: `Someone just filled the Get Involved form.
+
+Email: ${req.body.email}
+
+- Automated Notification`,
+      html: `<p>Someone just filled the <strong>Email Signup</strong> form.</p>
+<p><strong>Email:</strong> ${req.body.email}</p>
+<p>- Automated Notification</p>`,
+    };
+
+    // Send the emails
+    await transporter.sendMail(getInvolvedUserMail);
+    await transporter.sendMail(getInvolvedTeamMail);
+    res.status(200).json({ message: "Emails sent successfully" });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export {
+  createNewsLetterContent,
+  getNewsLetterData,
+  deleteNewsLetterContent,
+  subscribeByEmail,
+};

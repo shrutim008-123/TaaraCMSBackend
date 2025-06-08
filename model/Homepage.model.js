@@ -94,6 +94,41 @@ const quotes = new mongoose.Schema({
   },
 });
 
+const newsLetterSchema = new mongoose.Schema({
+  headline: {
+    type: String,
+    required: true,
+  },
+  subHeadline: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  desktopImage: {
+    type: imageSchema,
+    default: null,
+  },
+  mobileImage: {
+    type: imageSchema,
+    default: null,
+  },
+  boxHeading: {
+    type: String,
+    required: true,
+  },
+  boxSubHeading: {
+    type: String,
+    required: true,
+  },
+  checkboxText: {
+    type: String,
+    required: true,
+  },
+});
+
 // main homepage schema
 const HomepageSchema = new mongoose.Schema({
   hero: {
@@ -204,6 +239,10 @@ const HomepageSchema = new mongoose.Schema({
   },
   clients: {
     type: [clientSchema],
+    required: true,
+  },
+  newsLetter: {
+    type: newsLetterSchema,
     required: true,
   },
 });
