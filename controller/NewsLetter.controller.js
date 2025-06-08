@@ -59,7 +59,7 @@ We’re glad you’re here.
     const mailOptions2 = {
       from: `"TAARA Team" ${process.env.EMAIL_USER}`, // Proper sender format
       to: "developer@taara.org", // Ensure request contains the user's email
-      subject: "Welcome to TAARA — You’re Now Part of the Solution",
+      subject: "New Newsletter Signup",
       text: `
 A new user has signed up for the newsletter:
 
