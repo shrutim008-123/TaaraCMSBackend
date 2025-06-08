@@ -51,9 +51,6 @@ We’re glad you’re here.
 
         <p style="font-size: 16px; line-height: 1.6;"><strong>- The TAARA Team</strong></p>
       </div>
-      <div style="background-color: #e9ecef; text-align: center; padding: 15px; font-size: 14px; color: #6c757d;">
-        © TAARA. All rights reserved.
-      </div>
     </div>
   </div>
 `,
@@ -84,9 +81,6 @@ Email: ${req.body.email || "N/A"}
               <p style="font-size: 16px; line-height: 1.6;"><strong>Email:</strong> ${
                 req.body.email || "N/A"
               }</p>
-            </div>
-            <div style="background-color: #e9ecef; text-align: center; padding: 15px; font-size: 14px; color: #6c757d;">
-              © TAARA. All rights reserved.
             </div>
           </div>
         </div>
@@ -127,22 +121,7 @@ const deleteNewsLetterContent = async (req, res) => {
 
 const subscribeByEmail = async (req, res) => {
   try {
-    const getInvolvedUserMail = {
-      from: `"TAARA Team" <${process.env.EMAIL_USER}>`,
-      to: req.body.email,
-      subject: "You’re In — Welcome to TAARA",
-      text: `You’re in! Thanks for joining TAARA’s fight to protect kids, empower survivors, and flip the script on trafficking.
-
-We’ve received your message and our team will be in touch if needed. Until then, stay tuned and stay involved!
-
-- The TAARA Team`,
-      html: `<p><strong>You’re in!</strong> Thanks for joining TAARA’s fight to protect kids, empower survivors, and flip the script on trafficking.</p>
-
-<p><strong>- The TAARA Team</strong></p>`,
-    };
-
-    // Notification to the TAARA team about the new Get Involved submission
-    const getInvolvedTeamMail = {
+    const userMail = {
       from: `"TAARA Team" <${process.env.EMAIL_USER}>`,
       to: req.body.email,
       subject: "You’re In — Welcome to TAARA",
@@ -166,17 +145,36 @@ We’ve received your message and our team will be in touch if needed. Until the
           </p>
           <p style="font-size: 16px; line-height: 1.6;"><strong>- The TAARA Team</strong></p>
         </div>
-        <div style="background-color: #e9ecef; text-align: center; padding: 15px; font-size: 14px; color: #6c757d;">
-          © TAARA. All rights reserved.
-        </div>
       </div>
     </div>
   `,
     };
 
+    // Notification to the TAARA team about the new Footer Email submission
+    const teamMail = {
+      from: `"TAARA Team" <${process.env.EMAIL_USER}>`,
+      to: "developer@taara.org",
+      subject: "Email Submission Received",
+      text: `
+        A new email has been submitted by (${req.body.email}).
+      `,
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9; color: #333;">
+          <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); overflow: hidden;">
+            <div style="padding: 30px;">
+              <h2 style="color: #004085; margin-bottom: 10px;">Email Submission Received</h2>
+              <p style="font-size: 16px; line-height: 1.6;">
+                A new email has been submitted by (${req.body.email}).
+              </p>
+            </div>
+          </div>
+        </div>
+      `,
+    };
+
     // Send the emails
-    await transporter.sendMail(getInvolvedUserMail);
-    await transporter.sendMail(getInvolvedTeamMail);
+    await transporter.sendMail(userMail);
+    await transporter.sendMail(teamMail);
     res.status(200).json({ message: "Emails sent successfully" });
   } catch (error) {
     res.status(400).json({ message: error.message });
