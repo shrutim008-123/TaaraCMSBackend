@@ -35,6 +35,7 @@ const Solution1PageSchema = new mongoose.Schema({
     titlePrimary: {
       primaryWord: { type: String, required: true },
       secondaryWord: { type: String, required: true },
+      thirdWord: { type: String, required: true },
     },
     titleSecondary: {
       primaryWord: { type: String, required: true },
@@ -45,7 +46,11 @@ const Solution1PageSchema = new mongoose.Schema({
     description: { type: String, required: true },
   },
   primaryContent: {
-    primaryTitle: { type: String, required: true },
+    primaryTitle: {
+      word1: { type: String, required: true },
+      word2: { type: String, required: true },
+      word3: { type: String, required: true },
+    },
     secondaryTitle: { type: String, required: true },
     description: { type: String, required: true },
     cards: {
