@@ -17,6 +17,7 @@ import solution2Router from "./routes/SolutionsTwo.routes.js";
 import axios from "axios";
 import financialPageRouter from "./routes/Financial.route.js";
 import eventPageRouter from "./routes/EventPage.routes.js";
+import constantContactRouter from "./routes/ConstantContact.routes.js";
 
 dotenv.config();
 const app = express();
@@ -44,6 +45,7 @@ app.use("/file_upload", fileUploadRouter);
 app.use("/newsletter", newsletterRouter);
 app.use("/new_members", newMemberRouter);
 app.use("/payment", paymentRouter);
+app.use("/Oauth", constantContactRouter);
 
 const keepAlive = () => {
   setInterval(async () => {

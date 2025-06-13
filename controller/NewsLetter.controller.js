@@ -1,6 +1,8 @@
 import newsLetterModel from "../model/NewsLetter.model.js";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
+import { getValidAccessToken } from "../model/ConstantContact.controller.js";
+import axios from "axios";
 
 dotenv.config();
 // Create a transporter
@@ -12,14 +14,54 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+export const addContactToConstantContact = async (
+  email,
+  firstName = "",
+  lastName = ""
+) => {
+  const accessToken = await getValidAccessToken();
+
+  const payload = {
+    email_address: { address: email, permission_to_send: "implicit" },
+    first_name: firstName,
+    last_name: lastName,
+    create_source: "Contact",
+  };
+
+  try {
+    const response = await axios.post(
+      "https://api.cc.email/v3/contacts",
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log("Contact added to Constant Contact:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Failed to add contact:",
+      error.response?.data || error.message
+    );
+    // Do not throw here unless you want to block form success
+  }
+};
+
 const createNewsLetterContent = async (req, res) => {
   try {
+    const { email, firstName, lastName } = req.body;
     const existingMail = await newsLetterModel.findOne({
       email: req.body.email,
     });
     if (existingMail) {
       return res.status(400).json({ message: "Email already exists" });
     }
+
+    addContactToConstantContact(email, firstName, lastName);
 
     const newsLetter = await newsLetterModel.create(req.body);
     newsLetter.save();
@@ -31,36 +73,36 @@ const createNewsLetterContent = async (req, res) => {
       subject: "Welcome to TAARA — You’re Now Part of the Solution",
       text: `Thank you for signing up.
 
-You’ll receive updates on the work we’re doing, stories from the front lines, and ways you can take action. Together, we’ve already invested over 43,800 hours to empower survivors and prevent future victimization. With your support, we can do more.
+    You’ll receive updates on the work we’re doing, stories from the front lines, and ways you can take action. Together, we’ve already invested over 43,800 hours to empower survivors and prevent future victimization. With your support, we can do more.
 
-We’re glad you’re here. 
+    We’re glad you’re here.
 
--The TAARA Team
-`,
+    -The TAARA Team
+    `,
       html: `
-  <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f7f7f7; color: #333;">
-    <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden;">
-      <div style="padding: 30px;">
-        <h2 style="color: #004085;">Welcome to TAARA</h2>
-        <p style="font-size: 16px; line-height: 1.6;">Thank you for signing up.</p>
-        
-        <p style="font-size: 16px; line-height: 1.6;">
-          You’ll receive updates on the work we’re doing, stories from the front lines,
-          and ways you can take action.
-        </p>
+      <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f7f7f7; color: #333;">
+        <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden;">
+          <div style="padding: 30px;">
+            <h2 style="color: #004085;">Welcome to TAARA</h2>
+            <p style="font-size: 16px; line-height: 1.6;">Thank you for signing up.</p>
 
-        <p style="font-size: 16px; line-height: 1.6;">
-          <strong style="color: #155724;">Together, we’ve already invested over 43,800 hours</strong> 
-          to empower survivors and prevent future victimization. With your support, we can do more.
-        </p>
+            <p style="font-size: 16px; line-height: 1.6;">
+              You’ll receive updates on the work we’re doing, stories from the front lines,
+              and ways you can take action.
+            </p>
 
-        <p style="font-size: 16px; line-height: 1.6;">We’re glad you’re here.</p>
+            <p style="font-size: 16px; line-height: 1.6;">
+              <strong style="color: #155724;">Together, we’ve already invested over 43,800 hours</strong>
+              to empower survivors and prevent future victimization. With your support, we can do more.
+            </p>
 
-        <p style="font-size: 16px; line-height: 1.6;"><strong>- The TAARA Team</strong></p>
+            <p style="font-size: 16px; line-height: 1.6;">We’re glad you’re here.</p>
+
+            <p style="font-size: 16px; line-height: 1.6;"><strong>- The TAARA Team</strong></p>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-`,
+    `,
     };
 
     const mailOptions2 = {
@@ -68,39 +110,37 @@ We’re glad you’re here.
       to: "info@taara.org", // Ensure request contains the user's email
       subject: "New Newsletter Signup",
       text: `
-A new user has signed up for the newsletter:
+    A new user has signed up for the newsletter:
 
-First Name: ${req.body.firstName || "N/A"}
-Last Name: ${req.body.lastName || "N/A"}
-Email: ${req.body.email || "N/A"}
-      `,
+    First Name: ${req.body.firstName || "N/A"}
+    Last Name: ${req.body.lastName || "N/A"}
+    Email: ${req.body.email || "N/A"}
+          `,
       html: `
-        <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4; color: #333;">
-          <div style="max-width: 600px; margin: auto; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); overflow: hidden;">
-            <div style="padding: 30px;">
-              <h2 style="color: #004085; margin-bottom: 20px;">New Newsletter Signup</h2>
-              <p style="font-size: 16px; line-height: 1.6;"><strong>First Name:</strong> ${
-                req.body.firstName || "N/A"
-              }</p>
-              <p style="font-size: 16px; line-height: 1.6;"><strong>Last Name:</strong> ${
-                req.body.lastName || "N/A"
-              }</p>
-              <p style="font-size: 16px; line-height: 1.6;"><strong>Email:</strong> ${
-                req.body.email || "N/A"
-              }</p>
+            <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4; color: #333;">
+              <div style="max-width: 600px; margin: auto; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); overflow: hidden;">
+                <div style="padding: 30px;">
+                  <h2 style="color: #004085; margin-bottom: 20px;">New Newsletter Signup</h2>
+                  <p style="font-size: 16px; line-height: 1.6;"><strong>First Name:</strong> ${
+                    req.body.firstName || "N/A"
+                  }</p>
+                  <p style="font-size: 16px; line-height: 1.6;"><strong>Last Name:</strong> ${
+                    req.body.lastName || "N/A"
+                  }</p>
+                  <p style="font-size: 16px; line-height: 1.6;"><strong>Email:</strong> ${
+                    req.body.email || "N/A"
+                  }</p>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      `,
+          `,
     };
 
     // Send email
     await transporter.sendMail(mailOptions);
     await transporter.sendMail(mailOptions2);
 
-    res
-      .status(201)
-      .json({ message: "Newsletter created and email sent!", newsLetter });
+    res.status(201).json({ message: "Newsletter created and email sent!" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -128,6 +168,8 @@ const deleteNewsLetterContent = async (req, res) => {
 
 const subscribeByEmail = async (req, res) => {
   try {
+    const { email } = req.body;
+    addContactToConstantContact(email);
     const userMail = {
       from: `"TAARA Team" <${process.env.EMAIL_USER}>`,
       to: req.body.email,
