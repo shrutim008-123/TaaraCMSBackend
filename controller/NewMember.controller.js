@@ -30,26 +30,43 @@ const createNewMemberContent = async (req, res) => {
     const getInvolvedUserMail = {
       from: `"TAARA Team" <${process.env.EMAIL_USER}>`,
       to: req.body.email,
-      subject: "Thanks for Reaching Out — TAARA Get Involved",
-      text: `Thank you for reaching out to us, ${req.body.firstName}.
+      subject: "You Just Took the First Step Toward Change",
+      text: `Dear ${req.body.firstName},
 
-We’ve received your message and appreciate your interest in getting involved with TAARA. Our team will review your details and get back to you shortly.
+Thank you for reaching out to TAARA. By filling out our Get Involved form, you’ve taken the first step toward making a real difference in the lives of survivors, and in preventing exploitation before it starts.
 
-If this was a mistake or you have more to share, feel free to reply to this email.
+At TAARA, we believe that change begins with people like you: people who care enough to act. Whether you’re here to volunteer, collaborate, or simply learn more, your support helps us create safer futures for youth and stronger pathways for healing.
 
-- The TAARA Team`,
-      html: `<div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f7f7f7; color: #333;">
+Our team will be in touch shortly to follow up on how you'd like to get involved. Until then, we invite you to explore our work at taara.org and join our community on Instagram @taara_us https://www.instagram.com/taara_us/, where we share stories, tools, and impact in action.
+
+Your voice, your time, your care, it matters more than you know.
+
+With deep gratitude,
+
+The TAARA Team
+Empowering Survivors. Preventing Exploitation.
+
+---
+
+TAARA’s safety and empowerment programs for elementary and middle school students are designed to grow with the child. In elementary school, students learn to recognize safe and unsafe touch, use their voice with confidence, and build strong self-esteem. As they enter middle school, the focus expands to include digital and personal safety, online grooming, and cyberbullying. The program is delivered dynamically using age-appropriate and interactive content that meet students where they are, helping them stay safe, self-aware, and empowered at every stage.`,
+      html: `
+<div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f7f7f7; color: #333;">
   <div style="max-width: 600px; margin: auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); overflow: hidden;">
     <div style="padding: 30px;">
-      <h2 style="color: #004085;">Thank You for Reaching Out</h2>
-      <p style="font-size: 16px; line-height: 1.6;">Thank you for reaching out to us, <strong>${req.body.firstName}</strong>.</p>
-      <p style="font-size: 16px; line-height: 1.6;">We’ve received your message and appreciate your interest in getting involved with TAARA. Our team will review your details and get back to you shortly.</p>
-      <p style="font-size: 16px; line-height: 1.6;">If this was a mistake or you have more to share, feel free to reply to this email.</p>
-      <p style="font-size: 16px; line-height: 1.6;"><strong>- The TAARA Team</strong></p>
+      <h2 style="color: #004085;">You Just Took the First Step Toward Change</h2>
+      <p>Dear <strong>${req.body.firstName}</strong>,</p>
+      <p>Thank you for reaching out to TAARA. By filling out our Get Involved form, you’ve taken the first step toward making a real difference in the lives of survivors, and in preventing exploitation before it starts.</p>
+      <p>At TAARA, we believe that change begins with people like you: people who care enough to act. Whether you’re here to volunteer, collaborate, or simply learn more, your support helps us create safer futures for youth and stronger pathways for healing.</p>
+      <p>Our team will be in touch shortly to follow up on how you'd like to get involved. Until then, we invite you to explore our work at <a href="https://taara.org" target="_blank">taara.org</a> and join our community on Instagram <a href="https://www.instagram.com/taara_us/" target="_blank">@taara_us</a>, where we share stories, tools, and impact in action.</p>
+      <p>Your voice, your time, your care — it matters more than you know.</p>
+      <p>With deep gratitude,</p>
+      <p><strong>The TAARA Team</strong><br/>Empowering Survivors. Preventing Exploitation.</p>
+      <hr style="margin: 30px 0;" />
+      <p><strong>TAARA’s safety and empowerment programs</strong> for elementary and middle school students are designed to grow with the child. In elementary school, students learn to recognize safe and unsafe touch, use their voice with confidence, and build strong self-esteem. As they enter middle school, the focus expands to include digital and personal safety, online grooming, and cyberbullying. The program is delivered dynamically using age-appropriate and interactive content that meet students where they are, helping them stay safe, self-aware, and empowered at every stage.</p>
     </div>
   </div>
 </div>
-`,
+      `,
     };
 
     // Notification to the TAARA team about the new Get Involved submission
