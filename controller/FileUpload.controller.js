@@ -25,6 +25,7 @@ const uploadFile = async (req, res) => {
       Key: fileKey,
       Body: file.buffer,
       ContentType: file.mimetype,
+      CacheControl: "public, max-age=31536000",
     };
 
     await s3.send(new PutObjectCommand(uploadParams));
