@@ -4,13 +4,14 @@ import {
   getHomepageContent,
   updateHomepageContent,
 } from "../controller/Homepage.controller.js";
+import { verifyToken } from "../middleware/authorization.middleware.js";
 
 const homepageRouter = express.Router();
 
 homepageRouter.get("/", getHomepageContent);
 
-homepageRouter.post("/", createHomepageContent);
+homepageRouter.post("/", verifyToken, createHomepageContent);
 
-homepageRouter.put("/:id", updateHomepageContent);
+homepageRouter.put("/:id", verifyToken, updateHomepageContent);
 
 export default homepageRouter;

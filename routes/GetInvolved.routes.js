@@ -4,13 +4,14 @@ import {
   getGetInvolvedContent,
   updateGetInvolvedContent,
 } from "../controller/GetInvolved.controller.js";
+import { verifyToken } from "../middleware/authorization.middleware.js";
 
 const getInvolvedRouter = express.Router();
 
 getInvolvedRouter.get("/", getGetInvolvedContent);
 
-getInvolvedRouter.post("/", createGetInvolvedContent);
+getInvolvedRouter.post("/", verifyToken,createGetInvolvedContent);
 
-getInvolvedRouter.put("/:id", updateGetInvolvedContent);
+getInvolvedRouter.put("/:id", verifyToken,updateGetInvolvedContent);
 
 export default getInvolvedRouter;

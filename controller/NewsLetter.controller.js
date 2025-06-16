@@ -1,7 +1,7 @@
 import newsLetterModel from "../model/NewsLetter.model.js";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
-import { getValidAccessToken } from "../model/ConstantContact.controller.js";
+import { getValidAccessToken } from "./ConstantContact.controller.js";
 import axios from "axios";
 
 dotenv.config();

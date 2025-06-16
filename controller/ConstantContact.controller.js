@@ -1,6 +1,6 @@
 import axios from "axios";
 import dotenv from "dotenv";
-import constantContactTokenModel from "./ConstantContactToken.model.js";
+import constantContactTokenModel from "../model/ConstantContactToken.model.js";
 dotenv.config();
 
 const getOAuthUrl = (req, res) => {
@@ -93,8 +93,7 @@ const getValidAccessToken = async () => {
 const getToken = async (req, res) => {
   try {
     const tokenData = await constantContactTokenModel.find();
-    const tokenDoc = tokenData[0];
-    res.status(200).json(tokenDoc);
+    res.status(200).json(tokenData);
   } catch (error) {
     res.status(500).json("server error");
   }

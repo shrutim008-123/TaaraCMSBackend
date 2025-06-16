@@ -57,6 +57,14 @@ const quotes = new mongoose.Schema({
 // Awareness Page Schema
 const AwarenessPageSchema = new mongoose.Schema({
   heroSection: {
+    metaTitle: {
+      type: String,
+      required: true,
+    },
+    metaDescription: {
+      type: String,
+      required: true,
+    },
     titlePrimary: { type: String, required: true },
     titleSecondary: { type: String, required: true },
     description: { type: String, required: true },

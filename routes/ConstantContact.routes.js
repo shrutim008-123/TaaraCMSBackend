@@ -3,7 +3,7 @@ import {
   exchangeToken,
   getOAuthUrl,
   getToken,
-} from "../model/ConstantContact.controller.js";
+} from "../controller/ConstantContact.controller.js";
 const constantContactRouter = express.Router();
 
 constantContactRouter.get("/oauth-url", getOAuthUrl);

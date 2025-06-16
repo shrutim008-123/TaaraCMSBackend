@@ -132,6 +132,14 @@ const newsLetterSchema = new mongoose.Schema({
 // main homepage schema
 const HomepageSchema = new mongoose.Schema({
   hero: {
+    metaTitle: {
+      type: String,
+      required: true,
+    },
+    metaDescription: {
+      type: String,
+      required: true,
+    },
     images: {
       type: [imageSchema],
       default: [], // Default to 7 null images

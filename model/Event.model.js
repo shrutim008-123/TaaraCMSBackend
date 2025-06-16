@@ -49,6 +49,14 @@ function arrayLimitFive(val) {
 
 const eventSchema = new mongoose.Schema(
   {
+    metaTitle: {
+      type: String,
+      required: true,
+    },
+    metaDescription: {
+      type: String,
+      required: true,
+    },
     title: { type: String, required: true },
     description: { type: String, required: true },
     date: { type: Date, required: true },
