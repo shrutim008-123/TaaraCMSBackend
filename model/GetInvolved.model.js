@@ -54,6 +54,14 @@ const quotes = new mongoose.Schema({
 
 const GetInvolvedSchema = new mongoose.Schema({
   heroSection: {
+    metaTitle: {
+      type: String,
+      required: true,
+    },
+    metaDescription: {
+      type: String,
+      required: true,
+    },
     titlePrimary: {
       primaryWord: { type: String, required: true },
       secondaryWord: { type: String, required: true },

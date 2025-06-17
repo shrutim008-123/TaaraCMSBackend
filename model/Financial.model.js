@@ -34,6 +34,14 @@ const quotes = new mongoose.Schema({
 const FinancialSchema = new mongoose.Schema(
   {
     heroSection: {
+      metaTitle: {
+        type: String,
+        required: true,
+      },
+      metaDescription: {
+        type: String,
+        required: true,
+      },
       desktopImage: { type: ImageSchema, default: null },
       mobileImage: { type: ImageSchema, default: null },
       primaryWords: { type: String, required: true },

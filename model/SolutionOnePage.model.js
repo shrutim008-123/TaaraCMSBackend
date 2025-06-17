@@ -32,6 +32,14 @@ const quotes = new mongoose.Schema({
 // About Us Schema
 const Solution1PageSchema = new mongoose.Schema({
   heroSection: {
+    metaTitle: {
+      type: String,
+      required: true,
+    },
+    metaDescription: {
+      type: String,
+      required: true,
+    },
     titlePrimary: {
       primaryWord: { type: String, required: true },
       secondaryWord: { type: String, required: true },

@@ -33,6 +33,14 @@ const quotes = new mongoose.Schema({
 // About Us Schema
 const AboutUsSchema = new mongoose.Schema({
   heroSection: {
+    metaTitle: {
+      type: String,
+      required: true,
+    },
+    metaDescription: {
+      type: String,
+      required: true,
+    },
     imagesData: {
       type: [
         {

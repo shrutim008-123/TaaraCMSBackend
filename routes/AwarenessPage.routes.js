@@ -4,13 +4,14 @@ import {
   getAwarenessPageContent,
   updateAwarenessPageContent,
 } from "../controller/AwarenessPage.controller.js";
+import { verifyToken } from "../middleware/authorization.middleware.js";
 
 const awarenessRouter = express.Router();
 
 awarenessRouter.get("/", getAwarenessPageContent);
 
-awarenessRouter.post("/", createAwarenessPageContent);
+awarenessRouter.post("/", verifyToken, createAwarenessPageContent);
 
-awarenessRouter.put("/:id", updateAwarenessPageContent);
+awarenessRouter.put("/:id", verifyToken, updateAwarenessPageContent);
 
 export default awarenessRouter;
