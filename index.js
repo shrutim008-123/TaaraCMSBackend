@@ -19,6 +19,10 @@ import financialPageRouter from "./routes/Financial.route.js";
 import eventPageRouter from "./routes/EventPage.routes.js";
 import constantContactRouter from "./routes/ConstantContact.routes.js";
 
+//Raise Routes
+import RaiseAuth from "./routes/Raise/RaiseAuth.routes.js";
+import RaiseSignUp from "./routes/Raise/RaiseSignUp.routes.js";
+
 dotenv.config();
 const app = express();
 
@@ -46,6 +50,11 @@ app.use("/newsletter", newsletterRouter);
 app.use("/new_members", newMemberRouter);
 app.use("/payment", paymentRouter);
 app.use("/Oauth", constantContactRouter);
+
+//Raise Routes
+app.use("/auth", RaiseAuth);      // This creates /auth/raise-token
+app.use("/raise", RaiseSignUp);   // This creates /raise/raise-sign-up
+
 
 const keepAlive = () => {
   setInterval(async () => {
