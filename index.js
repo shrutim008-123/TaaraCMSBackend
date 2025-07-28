@@ -30,8 +30,14 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: "*",
+    origin: [
+      "https://taara.org",
+      "https://raise.taara.org",
+      "https://cms.taara.org",
+      "https://www.taara.org",
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
   })
 );
 
@@ -52,9 +58,8 @@ app.use("/payment", paymentRouter);
 app.use("/Oauth", constantContactRouter);
 
 //Raise Routes
-app.use("/auth", RaiseAuth);      // This creates /auth/raise-token
-app.use("/raise", RaiseSignUp);   // This creates /raise/raise-sign-up
-
+app.use("/auth", RaiseAuth); // This creates /auth/raise-token
+app.use("/raise", RaiseSignUp); // This creates /raise/raise-sign-up
 
 const keepAlive = () => {
   setInterval(async () => {
