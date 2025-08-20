@@ -1,8 +1,8 @@
 import express from 'express';
-import { signUp } from '../../controller/Raise/RaiseSignUp.controller.js'
-import { footerSignUp } from '../../controller/Raise/RaiseFooter.controller.js';
-import { verifyRaiseToken } from '../../middleware/authorization.middleware.js'
 import { bookletRequest } from '../../controller/Raise/RaiseBooklet.controller.js';
+import { footerSignUp } from '../../controller/Raise/RaiseFooter.controller.js';
+import { signUp } from '../../controller/Raise/RaiseSignUp.controller.js';
+import { verifyRaiseToken } from '../../middleware/authorization.middleware.js';
 
 const RaiseSignUp = express.Router();
 

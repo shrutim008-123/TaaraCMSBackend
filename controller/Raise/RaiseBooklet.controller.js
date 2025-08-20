@@ -1,21 +1,17 @@
-import nodemailer from 'nodemailer';
-import path from 'path';
 import fs from 'fs';
+import { Attachment, EmailParams, MailerSend, Recipient, Sender } from 'mailersend';
+import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Email transporter configuration
-const createTransporter = () => {
-  return nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.GMAIL_USER,
-      pass: process.env.GMAIL_APP_PASSWORD
-    }
-  });
-};
+const mailerSend = new MailerSend({
+  apiKey: process.env.MAILERSEND_API_KEY,
+});
+
+const sentFrom = new Sender(process.env.MAILERSEND_FROM_EMAIL, "TAARA Team");
 
 // Validation function
 const validateBookletRequest = (data) => {
@@ -264,67 +260,67 @@ export const bookletRequest = async (req, res) => {
       });
     }
 
-    res.status(200).json({
+    const emailContent = getEmailContent(schoolLevel, language, name, organization);
+
+    const pdfBuffer = fs.readFileSync(pdfPath);
+    
+    // Fix the attachment creation - specify disposition explicitly
+    const pdfAttachment = new Attachment(
+      pdfBuffer.toString("base64"),
+      `RAISE_${schoolLevel}_${language}.pdf`,
+      "application/pdf"
+    );
+    
+    // Set the disposition explicitly
+    pdfAttachment.disposition = "attachment";
+
+    // For trial account: Send to admin email with user info in subject/body
+    const adminRecipients = [new Recipient(process.env.MAILERSEND_FROM_EMAIL, "TAARA Admin")];
+    
+    // Modified email content to include user's information
+    const trialEmailContent = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <div style="background-color: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; margin-bottom: 20px; border-radius: 5px;">
+          <strong>Note:</strong> This email was requested by ${name} (${email}) but sent to admin due to trial account limitations.
+        </div>
+        ${emailContent.html}
+        <hr style="margin: 30px 0;">
+        <h3>Request Details:</h3>
+        <p><strong>Requested by:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        ${organization ? `<p><strong>Organization:</strong> ${organization}</p>` : ""}
+        <p><strong>City/State:</strong> ${cityState}</p>
+        <p><strong>Language:</strong> ${language === 'hi' ? 'Hindi' : 'English'}</p>
+        <p><strong>School Level:</strong> ${schoolLevel}</p>
+        <p><strong>Request Time:</strong> ${new Date().toLocaleString()}</p>
+      </div>
+    `;
+
+    const adminEmail = new EmailParams()
+      .setFrom(sentFrom)
+      .setTo(adminRecipients)
+      .setSubject(`[TRIAL] Booklet Request for ${email}: ${schoolLevel} school - ${language === 'hi' ? 'Hindi' : 'English'}`)
+      .setHtml(trialEmailContent)
+      .setAttachments([pdfAttachment]);
+
+    // Send only admin email for trial account
+    await mailerSend.email.send(adminEmail);
+    
+    console.log(`${schoolLevel} school booklet request processed for ${email} (${language}) from ${cityState}${organization ? ` - ${organization}` : ''} - sent to admin due to trial limitations`);
+
+    return res.status(200).json({
       success: true,
       message: language === 'hi'
-        ? 'पुस्तिका सफलतापूर्वक आपके ईमेल पर भेज दी गई है।'
-        : 'Booklet has been successfully sent to your email.',
+        ? 'आपका अनुरोध प्राप्त हो गया है। जल्द ही आपको पुस्तिका भेजी जाएगी।'
+        : 'Your request has been received. The booklet will be sent to you shortly.',
       data: {
         email,
         language,
         schoolLevel,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        note: 'Email sent to administrator due to trial account limitations'
       }
     });
-
-    const transporter = createTransporter();
-    const emailContent = getEmailContent(schoolLevel, language, name, organization);
-
-    // Send email to user
-    const userMailOptions = {
-      from: process.env.GMAIL_USER,
-      to: email,
-      subject: emailContent.subject,
-      html: emailContent.html,
-      attachments: [
-        {
-          filename: `RAISE_${schoolLevel.charAt(0).toUpperCase() + schoolLevel.slice(1)}_School_Booklet_${language === 'hi' ? 'Hindi' : 'English'}.pdf`,
-          path: pdfPath
-        }
-      ]
-    };
-
-    // Send email to admin
-    const adminMailOptions = {
-      from: process.env.GMAIL_USER,
-      to: process.env.GMAIL_USER,
-      subject: `Booklet Request: ${schoolLevel} school - ${language === 'hi' ? 'Hindi' : 'English'} - ${name}`,
-      html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h2 style="color: #4169E1; text-align: center;">New ${schoolLevel} school booklet download</h2>
-          <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0;">
-            <h3 style="color: #333;">User Details:</h3>
-            <table style="width: 100%; border-collapse: collapse;">
-              <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>School Level:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">${schoolLevel}</td></tr>
-              <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Name:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">${name}</td></tr>
-              <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Email:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">${email}</td></tr>
-              ${organization ? `<tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Organization:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">${organization}</td></tr>` : ''}
-              <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>City/State:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">${cityState}</td></tr>
-              <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Language:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">${language === 'hi' ? 'Hindi' : 'English'}</td></tr>
-              <tr><td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>Request Time:</strong></td><td style="padding: 8px; border-bottom: 1px solid #ddd;">${new Date().toLocaleString()}</td></tr>
-            </table>
-          </div>
-        </div>
-      `
-    };
-
-    // Send both emails (parallel for speed)
-    await Promise.all([
-      transporter.sendMail(userMailOptions),
-      transporter.sendMail(adminMailOptions)
-    ]);
-    console.log(`${schoolLevel} school booklet request fulfilled for ${email} (${language}) from ${cityState}${organization ? ` - ${organization}` : ''}`);
-
   } catch (error) {
     console.error('Booklet request error:', error);
 

@@ -44,7 +44,7 @@ const exchangeToken = async (req, res) => {
     token.save();
 
     // const { access_token, refresh_token, expires_in } = response.data;
-    res.redirect(`http://localhost:5173/subscriber`);
+    res.redirect(`https://cms.taara.org/subscriber`);
   } catch (error) {
     console.error(
       "Error exchanging token:",

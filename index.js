@@ -1,23 +1,23 @@
-import express from "express";
-import dotenv from "dotenv";
-import connection from "./config/DB.js";
+import axios from "axios";
 import cors from "cors";
-import homepageRouter from "./routes/Homepage.routes.js";
-import awarenessRouter from "./routes/AwarenessPage.routes.js";
-import fileUploadRouter from "./routes/FileUploads.routes.js";
+import dotenv from "dotenv";
+import express from "express";
+import connection from "./config/DB.js";
 import aboutUsRouter from "./routes/AboutUs.routes.js";
-import getInvolvedRouter from "./routes/GetInvolved.routes.js";
 import authRouter from "./routes/Auth.routes.js";
-import newsletterRouter from "./routes/NewsLetter.routes.js";
+import awarenessRouter from "./routes/AwarenessPage.routes.js";
+import constantContactRouter from "./routes/ConstantContact.routes.js";
+import eventPageRouter from "./routes/EventPage.routes.js";
+import fileUploadRouter from "./routes/FileUploads.routes.js";
+import financialPageRouter from "./routes/Financial.route.js";
+import getInvolvedRouter from "./routes/GetInvolved.routes.js";
 import healProjectRouter from "./routes/HealProject.routes.js";
-import paymentRouter from "./routes/Pyment.Routes.js";
+import homepageRouter from "./routes/Homepage.routes.js";
 import newMemberRouter from "./routes/NewMember.routes.js";
+import newsletterRouter from "./routes/NewsLetter.routes.js";
+import paymentRouter from "./routes/Pyment.Routes.js";
 import solution1Router from "./routes/SolutionsOne.routes.js";
 import solution2Router from "./routes/SolutionsTwo.routes.js";
-import axios from "axios";
-import financialPageRouter from "./routes/Financial.route.js";
-import eventPageRouter from "./routes/EventPage.routes.js";
-import constantContactRouter from "./routes/ConstantContact.routes.js";
 
 //Raise Routes
 import RaiseAuth from "./routes/Raise/RaiseAuth.routes.js";
@@ -31,6 +31,7 @@ app.use(express.json());
 app.use(
   cors({
     origin: [
+      "http://localhost:5173",
       "https://taara.org",
       "https://raise.taara.org",
       "https://cms.taara.org",
@@ -58,7 +59,7 @@ app.use("/payment", paymentRouter);
 app.use("/Oauth", constantContactRouter);
 
 //Raise Routes
-app.use("/auth", RaiseAuth); // This creates /auth/raise-token
+app.use("/raise-auth", RaiseAuth); // This creates /auth/raise-token
 app.use("/raise", RaiseSignUp); // This creates /raise/raise-sign-up
 
 const keepAlive = () => {
