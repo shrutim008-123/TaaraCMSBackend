@@ -1,5 +1,6 @@
+import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
-
+dotenv.config();
 // Use environment variables for email configuration
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -12,6 +13,7 @@ const transporter = nodemailer.createTransport({
 export const footerSignUp = async (req, res) => {
   try {
     const { email } = req.body;
+    console.log('Received footer sign-up data:', req.body);
 
     // Validate required fields
     if (!email) {
@@ -96,6 +98,8 @@ export const footerSignUp = async (req, res) => {
         </div>
       `
     };
+
+    console.log('Sending emails to:', email, 'and admin:', process.env.GMAIL_USER, "from", transporter.options.auth);
 
     // Send both emails
     await Promise.all([

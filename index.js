@@ -32,6 +32,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
+      "http://localhost:5174",
       "https://taara.org",
       "https://raise.taara.org",
       "https://cms.taara.org",
