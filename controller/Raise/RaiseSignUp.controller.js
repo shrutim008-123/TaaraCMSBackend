@@ -1,17 +1,21 @@
+import dotenv from 'dotenv';
 import nodemailer from 'nodemailer';
+dotenv.config();
 
 // Use environment variables for email configuration
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: process.env.GMAIL_USER,
-    pass: process.env.GMAIL_APP_PASSWORD
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS
   }
 });
 
 export const signUp = async (req, res) => {
   try {
     const { firstName, lastName, email } = req.body;
+
+    console.log('Received sign-up data:', req.body);
 
     // Validate required fields
     if (!firstName || !lastName || !email) {
